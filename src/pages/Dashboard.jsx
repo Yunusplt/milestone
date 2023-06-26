@@ -9,7 +9,8 @@ import { getSuccess } from "../features/blogSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  //   const BASE_URL = process.env.REACT_APP_BASE_URL;
+    // const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 
   const getBlogs = async () => {
     try {
@@ -31,7 +32,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar />
       <Grid
         container
         sx={{
@@ -39,6 +39,7 @@ const Dashboard = () => {
           justifyContent: "center",
           alignItems: "center",
           gap: 2,
+          mt:2
         }}
       >
         {blogs?.map((blog) => (
