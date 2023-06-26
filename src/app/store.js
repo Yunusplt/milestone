@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import blogReducer from '../features/blogSlice';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    blog: blogReducer,
   },
+  devTools: process.env.NODE_ENV !== "production",
 });
+
+export default store
