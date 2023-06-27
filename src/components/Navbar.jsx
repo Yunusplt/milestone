@@ -11,12 +11,69 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import {useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useAuthCalls from "../hooks/useAuthCalls";
 
 
-const pages = ["Dashboard", "New Blog", "About"];
-const settings = ["My Blogs", "Profile", "Logout"];
+// const pages = ["Dashboard", "New Blog", "About"];
+// const settings = ["My Blogs", "Profile", "Logout"];
+// const regLog=["Login", "Register"]
+
+const pages = [
+  {
+    title:"Dashboard",
+    url: "/"
+  },
+  {
+    title:"New Blog",
+    url: "blog/new-blog"
+  },
+  {
+    title:"About",
+    url: "/about"
+  },
+]
+
+const settings = [
+  {
+    title:"My Blogs",
+    url: "/my-blogs"
+},
+  {
+    title:"Profile",
+    url: "/profile"
+},
+  {
+    title:"Logout",
+    url: "/"
+},
+]
+
+const regLogs = [
+  {
+    title: "Login",
+    url: "/login"
+  },
+  {
+    title: "Register",
+    url: "/register"
+  }
+]
 
 function Navbar() {
+  const {currentUser} = useSelector((state)=>state.auth)
+  const {logout} = useAuthCalls()
+  const navigate = useNavigate()
+
+  const handleClick =(a)=>{
+    if (a.title==="Logout") {
+      logout()
+    }else{
+      navigate(a.url)
+    }
+  }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -36,7 +93,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar sx={{backgroundColor:"salmon"}} position="static">
+    <AppBar sx={{ backgroundColor: "salmon" }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -95,8 +152,8 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Typography onClick={()=>navigate(page.url)} textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -134,11 +191,11 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.title}
+                onClick={()=>handleCloseNavMenu(navigate(page.url))}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
@@ -165,11 +222,27 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {currentUser
+                ? settings.map((setting) => (
+                    <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+                      <Typography
+                        onClick={() =>handleClick(setting) }
+                        textAlign="center"
+                      >
+                        {setting.title}
+                      </Typography>
+                    </MenuItem>
+                  ))
+                : regLogs.map((regLog) => (
+                    <MenuItem key={regLog.title} onClick={handleCloseUserMenu}>
+                      <Typography
+                        onClick={() => navigate(regLog.url)}
+                        textAlign="center"
+                      >
+                        {regLog.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
             </Menu>
           </Box>
         </Toolbar>

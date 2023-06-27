@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import { Route, Routes} from "react-router-dom"
 import Dashboard from '../pages/Dashboard'
 import Register from '../pages/Register'
 import PrivateRouter from './PrivateRouter'
@@ -9,7 +9,6 @@ import Login from '../pages/Login'
 
 const AppRouter = () => {
   return (
-    <BrowserRouter>
         <Routes>
             <Route path='/' element={<Dashboard/>}/>
             <Route path='about' element={<About/>}/>
@@ -19,7 +18,6 @@ const AppRouter = () => {
                 <Route path='new-blog' element={<NewBlog/>} />
             </Route>
         </Routes>
-    </BrowserRouter>
   )
 }
 

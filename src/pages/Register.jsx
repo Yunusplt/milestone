@@ -9,10 +9,10 @@ import { Formik } from "formik";
 // import useAuthCall from "../hooks/useAuthCall";
 import RegisterForm, { RegisterSchema } from "../components/auth/RegisterForm";
 import useAuthCalls from "../hooks/useAuthCalls";
-import { useSelector } from "react-redux";
+
 
 const Register = () => {
-  const  register = useAuthCalls();
+  const  {register} = useAuthCalls();
 
 
 

@@ -16,9 +16,9 @@ const authSlice = createSlice({
       state.error = false;
     },
     loginSuccess: (state, { payload }) => {
+      console.log(payload);
       state.loading = false;
       state.currentUser = payload?.user?.username;
-      state.isAdmin = payload?.user?.is_superuser;
       state.token = payload?.key;
     },
     logoutSuccess: (state) => {
@@ -26,11 +26,10 @@ const authSlice = createSlice({
       state.currentUser = null;
       state.token = null;
     },
-    registerSuccess: (state, actions) => {
-      console.log(actions);
+    registerSuccess: (state, {payload}) => {
       state.loading = false;
-      // state.currentUser = payload?.username;
-      // state.token = payload?.token;
+      state.currentUser = payload?.username;
+      state.token = payload?.token;
       state.error = false;
     },
     fetchFail: (state) => {

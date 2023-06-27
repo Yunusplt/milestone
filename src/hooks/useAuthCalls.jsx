@@ -1,7 +1,8 @@
 import axios from "axios"
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchFail, fetchStart, registerSuccess } from '../features/authSlice'
+import { useDispatch } from 'react-redux'
+import { fetchFail, fetchStart, logoutSuccess, registerSuccess,loginSuccess } from '../features/authSlice'
 import { useNavigate } from "react-router-dom"
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify"
 
 const useAuthCalls = () => {
     const dispatch = useDispatch()
@@ -17,13 +18,48 @@ const useAuthCalls = () => {
       );
       console.log(data);
       dispatch(registerSuccess(data));
-      navigate("/blog");
+      navigate("/");
     } catch (err) {
       dispatch(fetchFail());
     }
   };
 
-return register
+    const login = async (userInfo) => {
+      dispatch(fetchStart());
+      try {
+        const { data } = await axios.post(
+          "http://35113.fullstack.clarusway.com/users/auth/login/",
+          userInfo
+        );
+        console.log(data);
+        dispatch(loginSuccess(data));
+        toastSuccessNotify("Login performed");
+        navigate("/");
+      } catch (err) {
+        dispatch(fetchFail());
+        toastErrorNotify("Login can not be performed");
+      }
+    };
+
+
+  const logout = async () => {
+    dispatch(fetchStart());
+    try {
+      await axios.post(
+        "http://35113.fullstack.clarusway.com/users/auth/logout/"
+      );
+      dispatch(logoutSuccess());
+      toastSuccessNotify("Logout performed");
+      navigate("/");
+    } catch (err) {
+      dispatch(fetchFail());
+      toastErrorNotify("Logout can not be performed")
+    }
+  };
+
+
+
+return {register, logout,login}
 }
 
 export default useAuthCalls

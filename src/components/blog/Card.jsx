@@ -11,18 +11,20 @@ import { Box, Button, Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useSelector } from "react-redux";
 
-const CardBlogs = ({blog}) => {
- 
-
-  const formattedDate = new Date(`${blog?.publish_date}`).toLocaleString("tr-TR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+const CardBlogs = ({ blog }) => {
+  const formattedDate = new Date(`${blog?.publish_date}`).toLocaleString(
+    "tr-TR",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }
+  );
 
   return (
     <Card sx={{ maxWidth: 350, cursor: "pointer" }}>
@@ -33,25 +35,21 @@ const CardBlogs = ({blog}) => {
         alt={blog?.title}
         sx={{ objectFit: "contain", py: 2 }}
       />
-      <CardHeader
-        title={blog?.title}
-        subheader={formattedDate}
-      />
+      <CardHeader title={blog?.title} subheader={formattedDate} />
 
       <CardContent
-        component="div"
-        fontSize="h5.fontSize"
-        overflow="hidden"
-        textOverflow="ellipsis"
-        height={20}
       >
-        <Box sx={{ flexGrow: 1, overflow: "hidden" }}>
-          <Grid container wrap="nowrap" >
-            <Grid item xs zeroMinWidth>
-              <Typography noWrap>{blog?.content}</Typography>
-            </Grid>
-          </Grid>
-        </Box>
+        <Typography
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          {blog?.content}
+        </Typography>
       </CardContent>
       <CardContent
         sx={{ display: "flex", justifyContent: "left", alignItems: "center" }}
@@ -80,19 +78,12 @@ const CardBlogs = ({blog}) => {
       </CardActions>
     </Card>
   );
-}
+};
 
-export default CardBlogs
-
-
-
+export default CardBlogs;
 
 // export default function RecipeReviewCard() {
 
-
-
 // }
-
-
 
 // //todo   marginLeft: "auto",
