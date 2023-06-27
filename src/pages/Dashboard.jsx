@@ -5,9 +5,11 @@ import Card from "../components/blog/Card";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getSuccess } from "../features/blogSlice";
+import useBlogCalls from "../hooks/useBlogCalls";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const getCategoryData = useBlogCalls()
     // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
@@ -25,6 +27,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getBlogs();
+    getCategoryData()
   }, []); // eslint-disable-line
 
   const { blogs } = useSelector((state) => state.blog);
