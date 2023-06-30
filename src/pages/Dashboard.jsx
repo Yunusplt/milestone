@@ -9,7 +9,7 @@ import useBlogCalls from "../hooks/useBlogCalls";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const getCategoryData = useBlogCalls()
+  const {getCategoryData} = useBlogCalls()
     // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 

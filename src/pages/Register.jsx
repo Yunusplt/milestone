@@ -70,7 +70,7 @@ const Register = () => {
           </Formik>
 
           <Box sx={{ textAlign: "left", mt: 2 }}>
-            Already have an account? <Link to="/">Sign in</Link>
+            Already have an account? <Link to="/login">Sign in</Link>
           </Box>
         </Grid>
       </Grid>

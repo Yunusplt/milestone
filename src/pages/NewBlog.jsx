@@ -1,18 +1,12 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import LockIcon from "@mui/icons-material/Lock";
-import image from "../assets/result.svg";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
-
 import * as Yup from "yup";
-import useAuthCalls from "../hooks/useAuthCalls";
 import { useState } from "react";
-import useBlogCalls from "../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
+import useBlogCalls from "../hooks/useBlogCalls";
 
 
 const SignupSchema = Yup.object().shape({
@@ -27,16 +21,27 @@ const SignupSchema = Yup.object().shape({
 const NewBlog = () => {
 const { categories } = useSelector((state) => state.blog);
 console.log(categories);
-    const [category, setCategory] = useState("");
-    const [status, setStatus] = useState("");
 
-    const handleChangeCat = (event) => {
-      setCategory(event.target.value);
+const {postNewBlog}=useBlogCalls()
+    // const [category, setCategory] = useState("");
+    // const [status, setStatus] = useState("");
+
+    // const handleChangeCat = (event) => {
+    //   setCategory(event.target.value);
     
-    };
-    const handleChangeStat = (event) => {
-      setStatus(event.target.value)
-    };
+    // };
+    // const handleChangeStat = (event) => {
+    //   setStatus(event.target.value)
+    // };+
+
+    // const handleChange =(e)=>{
+    //     console.log(e);
+    // }
+
+    // const handleSubmit =e=>{
+    //   e.preventDefault()
+    //   console.log(values);
+    // }
 
 
 
@@ -55,18 +60,18 @@ console.log(categories);
         <Grid item xs={12} sm={10} md={6}>
           <Formik
             initialValues={{
-              username: "",
-              first_name: "",
-              last_name: "",
-              email: "",
-              password: "",
-              password2: "",
+              title: "",
+              content: "",
+              image: "",
+              category: null,
+              status: "",
+              slug: "",
             }}
             validationSchema={SignupSchema}
             onSubmit={(values, actions) => {
               //! submit işlemi gerçekleştiğinde yapmasını istediğimiz işlemleri buraya yazıyoruz.
               console.log(values);
-              // register(values);
+              postNewBlog(values);
               actions.resetForm(); // inputları boşaltmak için kullanıyroruz
             }}
           >
@@ -77,6 +82,7 @@ console.log(categories);
               handleChange,
               handleBlur,
               handleSubmit,
+              setFieldValue,
             }) => (
               <Form sx={{ border: 1 }}>
                 <Box
@@ -106,8 +112,8 @@ console.log(categories);
                     value={values.title}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    helperText={touched.title && errors.title} 
-                    error={touched.title && errors.title} 
+                    helperText={touched.title && errors.title}
+                    error={touched.title && errors.title}
                     required
                   />
                   <TextField
@@ -124,35 +130,57 @@ console.log(categories);
                   />
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                      <InputLabel id="demo-simple-select-label">
+                        Category
+                      </InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={category}
+                        value={values.category}
                         label="Category"
-                        onChange={handleChangeCat}
+                        // onChange={handleChange}
+                        onBlur={handleBlur}
+                        onChange={(e) => {
+                          setFieldValue("category", e.target.value);
+                        }}
                       >
-                      {categories.map((category)=>(
-                        <MenuItem value={category.id}>{category.name}</MenuItem>
-                      ))}
-                      
+                        {categories.map((category) => (
+                          <MenuItem value={category.id}>
+                            {category.name}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </Box>
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                      <InputLabel id="demo-simple-select-label">
+                        Status
+                      </InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={status}
+                        value={values.status}
                         label="Status"
-                        onChange={handleChangeStat}
+                        // onChange={handleChange}
+                        onBlur={handleBlur}
+                        onChange={(e) => {
+                          setFieldValue("status", e.target.value);
+                        }}
                         required
                       >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem
+                          onClick={(e) => console.log(e.target.dataset.value)}
+                          value="d"
+                        >
+                          Draft
+                        </MenuItem>
+                        <MenuItem
+                          onClick={(e) => console.log(e.target.dataset.value)}
+                          value="p"
+                        >
+                          Published
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
@@ -175,7 +203,7 @@ console.log(categories);
                     color="info"
                     type="submit"
                     variant="contained"
-                    size="large"             
+                    size="large"
                   >
                     New Blog
                   </Button>

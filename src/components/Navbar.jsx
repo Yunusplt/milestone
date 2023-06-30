@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import {useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useAuthCalls from "../hooks/useAuthCalls";
+import { toastWarnNotify } from "../helper/ToastNotify";
 
 
 // const pages = ["Dashboard", "New Blog", "About"];
@@ -74,6 +75,16 @@ function Navbar() {
     }
   }
 
+  const handleClickPages =(page)=>{
+      if (page.title==="New Blog" && !currentUser ) {
+        navigate(page.url)
+        toastWarnNotify("You must be logged in!")
+      }else{
+        handleCloseNavMenu()
+        navigate(page.url)
+      }
+  }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -114,11 +125,12 @@ function Navbar() {
           >
             LOGO
           </Typography> */}
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex", cursor:"pointer" } }}>
             <img
               src="https://cdn.pixabay.com/photo/2015/01/21/13/20/blog-606684_1280.png"
               width="100px"
               alt="Logo"
+              onClick={()=>navigate("/")}
             />
           </Box>
 
@@ -153,20 +165,19 @@ function Navbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Typography onClick={()=>navigate(page.url)} textAlign="center">{page.title}</Typography>
+                  <Typography  onClick={()=>handleClickPages(page)} textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box
-            component="a"
-            href=""
-            sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1 }}
+            sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1, cursor:"pointer" }}
           >
             <img
               src="https://cdn.pixabay.com/photo/2015/01/21/13/20/blog-606684_1280.png"
               width="100px"
               alt="Logo"
+              onClick={()=>navigate("/")}
             />
           </Box>
           {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -192,7 +203,8 @@ function Navbar() {
             {pages.map((page) => (
               <Button
                 key={page.title}
-                onClick={()=>handleCloseNavMenu(navigate(page.url))}
+                // onClick={()=>handleCloseNavMenu(navigate(page.url))}
+                onClick={()=>handleClickPages(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.title}

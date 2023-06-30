@@ -27,7 +27,7 @@ const CardBlogs = ({ blog }) => {
   );
 
   return (
-    <Card sx={{ maxWidth: 350, cursor: "pointer" }}>
+    <Card sx={{ width:350, cursor: "pointer", height:540, boxShadow:11, borderRadius:2 }}>
       <CardMedia
         component="img"
         height="200"
@@ -59,7 +59,7 @@ const CardBlogs = ({ blog }) => {
         </IconButton>
         <Typography>{blog?.author}</Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing >
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
           <Typography variant="h5">{blog?.likes}</Typography>
