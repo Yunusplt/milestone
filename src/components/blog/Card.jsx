@@ -12,8 +12,30 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toastWarnNotify } from "../../helper/ToastNotify";
 
 const CardBlogs = ({ blog }) => {
+
+  const navigate = useNavigate()
+  const {currentUser} = useSelector((state)=>state.auth)
+
+  console.log(currentUser);
+//todo domain e id ekleme???
+  const handleOnClick=(blog)=>{
+     if (currentUser) {
+      navigate(`/blog/detail/`, { state: { blog } });
+      
+  
+      
+  }else{
+       navigate("/login");
+       toastWarnNotify("You must be logged in!")
+  }
+  }
+
+ 
+
   const formattedDate = new Date(`${blog?.publish_date}`).toLocaleString(
     "tr-TR",
     {
@@ -72,7 +94,7 @@ const CardBlogs = ({ blog }) => {
           <VisibilityIcon />
           <Typography variant="h5">{blog?.post_views}</Typography>
         </IconButton>
-        <Button sx={{ marginLeft: "auto" }} variant="contained" color="info">
+        <Button onClick={()=>handleOnClick(blog)} sx={{ marginLeft: "auto" }} variant="contained" color="info">
           Read More
         </Button>
       </CardActions>

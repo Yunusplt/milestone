@@ -8,6 +8,9 @@ const authSlice = createSlice({
     loading: false,
     error: false,
     isAdmin: false,
+    image:null,
+    email: null,
+    bio : null,
     token: null,
   },
   reducers: {
@@ -29,8 +32,12 @@ const authSlice = createSlice({
     registerSuccess: (state, {payload}) => {
       state.loading = false;
       state.currentUser = payload?.username;
+      state.email=payload?.email;
+      state.bio=payload?.bio;
+      state.image=payload?.image
       state.token = payload?.token;
       state.error = false;
+      console.log(state.bio);
     },
     fetchFail: (state) => {
       state.loading = false;

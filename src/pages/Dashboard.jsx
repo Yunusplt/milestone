@@ -31,6 +31,7 @@ const Dashboard = () => {
   }, []); // eslint-disable-line
 
   const { blogs } = useSelector((state) => state.blog);
+  console.log(blogs);
 
   return (
     <>
