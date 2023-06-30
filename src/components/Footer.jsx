@@ -11,7 +11,7 @@ export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box sx={{width: "100%" }}>
+    <Box sx={{width: "100%" , marginTop:10}}>
       <Paper
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
         elevation={3}

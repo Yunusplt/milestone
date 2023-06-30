@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Footer from "../components/Footer";
+
 import { Grid } from "@mui/material";
 import Card from "../components/blog/Card";
 import axios from "axios";
@@ -51,7 +51,6 @@ const Dashboard = () => {
           </Grid>
         ))}
       </Grid>
-      <Footer />
     </>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchFail, fetchStart } from '../features/authSlice'
-import { getBlogDetSuccess, getCategorySuccess, getNewBlogSuccess } from '../features/blogSlice'
+import { getBlogDetSuccess, getCategorySuccess, getCommentSuccess, getNewBlogSuccess, getNewCommentSuccess } from '../features/blogSlice'
 
 
 
@@ -62,7 +62,47 @@ const useBlogCalls = () => {
       }
     };
 
-    return { getCategoryData, postNewBlog, getBlogDetailData };
+       const postNewComment = async (comm, idNo) => {
+         console.log(comm);
+         console.log(idNo);
+         dispatch(fetchStart());
+         try {
+           const { data } = await axios.post(
+             `http://35113.fullstack.clarusway.com/api/comments/${idNo}/`,
+             comm,
+             {
+               headers: { Authorization: `Token ${token}` },
+             }
+           );
+           console.log(data);
+          //  dispatch(getNewCommentSuccess(data));
+         } catch (error) {
+           console.log(error);
+           dispatch(fetchFail);
+         }
+       };
+       const getComments = async (idNo) => {
+         console.log(idNo);
+         dispatch(fetchStart());
+         try {
+           const { data } = await axios.get(
+             `http://35113.fullstack.clarusway.com/api/comments/${idNo}/`
+           );
+           console.log(data);
+           dispatch(getCommentSuccess(data));
+         } catch (error) {
+           console.log(error);
+           dispatch(fetchFail);
+         }
+       };
+
+    return {
+      getCategoryData,
+      postNewBlog,
+      getBlogDetailData,
+      postNewComment,
+      getComments,
+    };
 }
 
 export default useBlogCalls

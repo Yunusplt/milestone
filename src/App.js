@@ -5,6 +5,7 @@ import store from "./app/store";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Provider store={store}>
           <Navbar />
           <AppRouter />
+          <Footer />
         </Provider>
         <ToastContainer />
       </BrowserRouter>
