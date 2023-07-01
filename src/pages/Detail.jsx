@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { getBlogDetSuccess } from "../features/blogSlice";
 import { useLocation, useParams } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -18,6 +15,7 @@ import { useSelector } from "react-redux";
 import CommentForum from "../components/blog/CommentForum";
 import CommentCard from "../components/blog/CommentCard";
 import Modal from "@mui/material/Modal";
+import DeleteModal from "../components/blog/DeleteModal";
 
  const style = {
    position: "absolute",
@@ -35,21 +33,17 @@ const Detail = () => {
   const [commentField, setCommentField] = useState(false);
 
   const { getBlogDetailData } = useBlogCalls();
+  
 
   const { currentUser } = useSelector((state) => state.auth);
-  console.log(currentUser);
 
   const location = useLocation();
   const blog = location.state.blog;
-  console.log(blog);
-  console.log(blog.id);
-  useEffect(() => {
-    getBlogDetailData(blog.id);
-  }, []);
+  // useEffect(() => {
+    // getBlogDetailData(blog.id);
+  // }, []);
 
-  const { detail } = useSelector((state) => state.blog);
-  console.log(detail);
-
+ 
   const formattedDate = new Date(`${blog?.publish_date}`).toLocaleString(
     "tr-TR",
     {
@@ -68,7 +62,9 @@ const Detail = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
+    const { detail } = useSelector((state) => state.blog);
+    const [formValues, setFormValues] = useState(detail || null);
+    
 
   return (
     <Grid
@@ -136,30 +132,18 @@ const Detail = () => {
                 variant="contained"
                 color="success"
                 size="small"
+                onClick={() => handleOpen(getBlogDetailData(blog.id))}
               >
                 Update Blog
               </Button>
-              <Button onClick={handleOpen}>Open modal</Button>
-              <Modal
+              <DeleteModal
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Text in a modal
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor
-                    ligula.
-                  </Typography>
-                </Box>
-              </Modal>
+                handleClose={handleClose}
+                blogId={blog.id}
+                formValues = {formValues}
+                setFormValues = {setFormValues}
+
+              />
             </>
           ) : (
             ""

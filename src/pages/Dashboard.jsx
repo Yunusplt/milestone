@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import { Grid } from "@mui/material";
 import Card from "../components/blog/Card";
 import axios from "axios";
@@ -21,7 +20,6 @@ const Dashboard = () => {
       const url = "blogs";
       dispatch(getSuccess({ data, url }));
     } catch (error) {
-      console.log(error);
     }
   };
 

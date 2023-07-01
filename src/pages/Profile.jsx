@@ -1,11 +1,8 @@
 import React from 'react'
-import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector } from 'react-redux';
 
 
