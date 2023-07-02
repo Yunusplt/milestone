@@ -8,15 +8,13 @@ const useAuthCalls = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+      const BASE_URL = process.env.REACT_APP_BASE_URL;
 
     
   const register = async (userInfo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.post(
-        "http://35113.fullstack.clarusway.com/users/register/",
-        userInfo
-      );
+      const { data } = await axios.post(`${BASE_URL}users/register/`, userInfo);
       console.log(data);
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register performed");
@@ -30,7 +28,7 @@ const useAuthCalls = () => {
       dispatch(fetchStart());
       try {
         const { data } = await axios.post(
-          "http://35113.fullstack.clarusway.com/users/auth/login/",
+          `${BASE_URL}users/auth/login/`,
           userInfo
         );
         console.log(data);
@@ -47,9 +45,7 @@ const useAuthCalls = () => {
   const logout = async () => {
     dispatch(fetchStart());
     try {
-      await axios.post(
-        "http://35113.fullstack.clarusway.com/users/auth/logout/"
-      );
+      await axios.post(`${BASE_URL}users/auth/logout/`);
       dispatch(logoutSuccess());
       toastSuccessNotify("Logout performed");
       navigate("/");

@@ -13,14 +13,15 @@ import {
 
 const useBlogCalls = () => {
   const dispatch = useDispatch();
-  
-  const {token} = useSelector((state)=>state.auth)
+ 
+
+  const { token } = useSelector((state) => state.auth);
+ const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 
   const getBlogs = async () => {
     try {
-      const { data } = await axios.get(
-        "http://35113.fullstack.clarusway.com/api/blogs/"
-      );
+      const { data } = await axios.get(`${BASE_URL}api/blogs/`);
       const url = "blogs";
       dispatch(getSuccess({ data, url }));
     } catch (error) {}
@@ -29,9 +30,7 @@ const useBlogCalls = () => {
   const getCategoryData = async () => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.get(
-        "http://35113.fullstack.clarusway.com/api/categories/"
-      );
+      const { data } = await axios.get(`${BASE_URL}api/categories/`);
       dispatch(getCategorySuccess(data));
     } catch (error) {
       dispatch(fetchFail());
@@ -41,13 +40,9 @@ const useBlogCalls = () => {
   const postNewBlog = async (values) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.post(
-        "http://35113.fullstack.clarusway.com/api/blogs/",
-        values,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
+      const { data } = await axios.post(`${BASE_URL}api/blogs/`, values, {
+        headers: { Authorization: `Token ${token}` },
+      });
       dispatch(getNewBlogSuccess(data));
     } catch (error) {
       dispatch(fetchFail);
@@ -57,12 +52,10 @@ const useBlogCalls = () => {
   const getBlogDetailData = async (blog) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.get(
-        `http://35113.fullstack.clarusway.com/api/blogs/${blog}/`,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
+      const { data } = await axios.get(`${BASE_URL}api/blogs/${blog}/`, 
+      {
+        headers: { Authorization: `Token ${token}` },
+      });
       dispatch(getBlogDetSuccess(data));
     } catch (error) {
       dispatch(fetchFail());
@@ -72,13 +65,9 @@ const useBlogCalls = () => {
   const postNewComment = async (comm, idNo) => {
     dispatch(fetchStart());
     try {
-      await axios.post(
-        `http://35113.fullstack.clarusway.com/api/comments/${idNo}/`,
-        comm,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
+      await axios.post(`${BASE_URL}api/comments/${idNo}/`, comm, {
+        headers: { Authorization: `Token ${token}` },
+      });
     } catch (error) {
       dispatch(fetchFail);
     }
@@ -86,9 +75,7 @@ const useBlogCalls = () => {
   const getComments = async (idNo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.get(
-        `http://35113.fullstack.clarusway.com/api/comments/${idNo}/`
-      );
+      const { data } = await axios.get(`${BASE_URL}api/comments/${idNo}/`);
       dispatch(getCommentSuccess(data));
     } catch (error) {
       dispatch(fetchFail);
@@ -100,7 +87,7 @@ const useBlogCalls = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.put(
-        `http://35113.fullstack.clarusway.com/api/blogs/${idNo}/`,
+        `${BASE_URL}api/blogs/${idNo}/`,
         formValues,
         {
           headers: { Authorization: `Token ${token}` },
@@ -116,14 +103,11 @@ const useBlogCalls = () => {
   const postLike = async (idNo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.post(
-        `http://35113.fullstack.clarusway.com/api/likes/${idNo}/`, null,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
+      const { data } = await axios.post(`${BASE_URL}api/likes/${idNo}/`, null, {
+        headers: { Authorization: `Token ${token}` },
+      });
       console.log(data);
-      dispatch(postLikeSuccess(data))
+      dispatch(postLikeSuccess(data));
     } catch (error) {
       console.log(error);
       dispatch(fetchFail);
@@ -132,36 +116,31 @@ const useBlogCalls = () => {
   const deleteBlog = async (idNo) => {
     dispatch(fetchStart());
     try {
-      await axios.delete(
-        `http://35113.fullstack.clarusway.com/api/blogs/${idNo}/`,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
+      await axios.delete(`${BASE_URL}api/blogs/${idNo}/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
     } catch (error) {
       console.log(error);
       dispatch(fetchFail);
     }
   };
 
-    const getUserData = async (userID) => {
-      dispatch(fetchStart());
-      try {
-        const { data } = await axios.get(
-          `http://35113.fullstack.clarusway.com/api/blogs/?author=${userID}`,
-          {
-            headers: { Authorization: `Token ${token}` },
-          }
-        );
-        console.log(data);
-        dispatch(getUserSuccess(data));
-      } catch (error) {
-        console.log(error);
-        dispatch(fetchFail);
-      }
-    };
-
-  
+  const getUserData = async (userID) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}api/blogs/?author=${userID}`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      );
+      console.log(data);
+      dispatch(getUserSuccess(data));
+    } catch (error) {
+      console.log(error);
+      dispatch(fetchFail);
+    }
+  };
 
   return {
     getBlogs,
