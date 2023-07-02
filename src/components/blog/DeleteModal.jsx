@@ -11,22 +11,25 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useSelector } from 'react-redux';
+import useBlogCalls from '../../hooks/useBlogCalls';
 
 
-const DeleteModal = ({open,handleClose,blogId, formValues, setFormValues}) => {
+const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
 
   const { categories } = useSelector((state) => state.blog);
+  const { putUpdateData, getBlogDetailData } = useBlogCalls();
 
   const handleChange = (e) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
+    setFormValues({
+      ...formValues,
       [e.target.name]: e.target.value,
-    }));
+    });
   };
 
    const handleSubmit = (e) => {
      e.preventDefault();
-      console.log(e);
+      putUpdateData(formValues,blogId)
+
      handleClose(); //? submit işleminden sonra modalın kapanması için burada handleClose fonksiyonunu çağırıyoruz.
    };
 
@@ -34,7 +37,18 @@ const DeleteModal = ({open,handleClose,blogId, formValues, setFormValues}) => {
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={()=>{
+        handleClose()
+        setFormValues({
+          title: "",
+          image: "",
+          category_name: "",
+          address: "",
+          status: "",
+          content: "",
+        });
+      }
+      }
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}

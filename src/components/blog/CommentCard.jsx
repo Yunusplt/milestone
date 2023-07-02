@@ -8,7 +8,7 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 
 const CommentCard = ({idNo}) => {
 
-  const { postNewComment } = useBlogCalls();
+  const { postNewComment, getBlogDetailData } = useBlogCalls();
 
 
   const handleSubmit =(e)=>{
@@ -22,7 +22,7 @@ const CommentCard = ({idNo}) => {
     }
 console.log(newComment);
     postNewComment(newComment,idNo)
-
+  
   }
 
   return (
@@ -46,6 +46,7 @@ console.log(newComment);
         sx={{ width: "95%", marginLeft: "8px" }}
         type="submit"
         variant="contained"
+
       >
         Add Comment
       </Button>

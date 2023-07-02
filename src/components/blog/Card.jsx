@@ -14,17 +14,22 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toastWarnNotify } from "../../helper/ToastNotify";
+import useBlogCalls from "../../hooks/useBlogCalls";
+import {useState} from "react";
+
+
 
 const CardBlogs = ({ blog }) => {
-
+console.log(blog);
   const navigate = useNavigate()
   const {currentUser} = useSelector((state)=>state.auth)
+  const {postLike, getBlogs} = useBlogCalls()
 
   console.log(currentUser);
 //todo domain e id ekleme???
   const handleOnClick=(blog)=>{
      if (currentUser) {
-      navigate(`/blog/detail/`, { state: { blog } });
+      navigate(`/blog/detail/`, { state: { blog} });
       
   
       
@@ -33,6 +38,17 @@ const CardBlogs = ({ blog }) => {
        toastWarnNotify("You must be logged in!")
   }
   }
+
+ 
+ const [isClicked, setClicked] = useState(false)
+
+  const handleClickLike = () =>{
+    postLike(blog?.id);
+    getBlogs();
+    setClicked(!isClicked)
+  }
+
+
 
  
 
@@ -49,7 +65,15 @@ const CardBlogs = ({ blog }) => {
   );
 
   return (
-    <Card sx={{ width:350, cursor: "pointer", height:540, boxShadow:11, borderRadius:2 }}>
+    <Card
+      sx={{
+        width: 350,
+        cursor: "pointer",
+        height: 540,
+        boxShadow: 11,
+        borderRadius: 2,
+      }}
+    >
       <CardMedia
         component="img"
         height="200"
@@ -59,8 +83,7 @@ const CardBlogs = ({ blog }) => {
       />
       <CardHeader title={blog?.title} subheader={formattedDate} />
 
-      <CardContent
-      >
+      <CardContent>
         <Typography
           sx={{
             overflow: "hidden",
@@ -81,8 +104,12 @@ const CardBlogs = ({ blog }) => {
         </IconButton>
         <Typography>{blog?.author}</Typography>
       </CardContent>
-      <CardActions disableSpacing >
-        <IconButton aria-label="add to favorites">
+      <CardActions disableSpacing>
+        <IconButton
+          color={isClicked ? "error" : "default"}
+          onClick={handleClickLike}
+          aria-label="add to favorites"
+        >
           <FavoriteIcon />
           <Typography variant="h5">{blog?.likes}</Typography>
         </IconButton>
@@ -94,7 +121,12 @@ const CardBlogs = ({ blog }) => {
           <VisibilityIcon />
           <Typography variant="h5">{blog?.post_views}</Typography>
         </IconButton>
-        <Button onClick={()=>handleOnClick(blog)} sx={{ marginLeft: "auto" }} variant="contained" color="info">
+        <Button
+          onClick={() => handleOnClick(blog)}
+          sx={{ marginLeft: "auto" }}
+          variant="contained"
+          color="info"
+        >
           Read More
         </Button>
       </CardActions>

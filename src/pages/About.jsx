@@ -12,6 +12,7 @@ const About = () => {
         justifyContent: "center",
         alignItems: "center",
         mt: 2,
+        mb:30
       }}
     >
       <Box>

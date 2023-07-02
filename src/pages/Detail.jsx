@@ -16,6 +16,8 @@ import CommentForum from "../components/blog/CommentForum";
 import CommentCard from "../components/blog/CommentCard";
 import Modal from "@mui/material/Modal";
 import DeleteModal from "../components/blog/DeleteModal";
+import UpdateModal from "../components/blog/UpdateModal";
+
 
  const style = {
    position: "absolute",
@@ -32,19 +34,18 @@ import DeleteModal from "../components/blog/DeleteModal";
 const Detail = () => {
   const [commentField, setCommentField] = useState(false);
 
-  const { getBlogDetailData } = useBlogCalls();
+  const { getBlogDetailData , postLike, getBlogs} = useBlogCalls();
   
 
   const { currentUser } = useSelector((state) => state.auth);
 
+
   const location = useLocation();
   const blog = location.state.blog;
-  // useEffect(() => {
-    // getBlogDetailData(blog.id);
-  // }, []);
+ const { detail } = useSelector((state) => state.blog);
 
  
-  const formattedDate = new Date(`${blog?.publish_date}`).toLocaleString(
+  const formattedDate = new Date(`${detail?.publish_date}`).toLocaleString(
     "tr-TR",
     {
       day: "2-digit",
@@ -58,12 +59,52 @@ const Detail = () => {
 
  
 
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+   const handleClose = () => {
+     setOpen(false);
+     setFormValues({
+       title: "",
+       image: "",
+       category_name: "",
+       address: "",
+       status:"",
+       content:""
+     });
+     //* handleClose olduğunda yani modal kapnadığında formdaki verilerin temizlenmesi için burada tanımladık.
+   };
 
-    const { detail } = useSelector((state) => state.blog);
-    const [formValues, setFormValues] = useState(detail || null);
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = () => setOpen1(true);
+   const handleClose1 = () => setOpen1(false);
+
+   
+
+   const warning = "Do you really want to delete your blog? This process cannot be undone!"
+
+    
+    const [formValues, setFormValues] = useState({
+      title: "",
+      image: "",
+      category_name: "",
+      address: "",
+      status: "",
+      content: "",
+    });
+
+  useEffect(() => {
+  getBlogDetailData(blog.id)
+
+    }, [])
+
+  const [isClicked, setClicked] = useState(false);
+
+  const handleClickLike = () => {
+    postLike(detail?.id);
+    getBlogDetailData(detail.id);
+    setClicked(!isClicked);
+  };
     
 
   return (
@@ -74,6 +115,7 @@ const Detail = () => {
         justifyContent: "center",
         alignItems: "center",
         mt: 2,
+        mb:8
       }}
     >
       <Box
@@ -86,8 +128,8 @@ const Detail = () => {
         <CardMedia
           component="img"
           height="400"
-          image={blog?.image}
-          alt={blog?.title}
+          image={detail?.image}
+          alt={detail?.title}
           sx={{ objectFit: "contain", py: 2 }}
         />
         <CardContent
@@ -97,34 +139,38 @@ const Detail = () => {
             <AccountCircleIcon sx={{ fontSize: 47 }} />
           </IconButton>
           <Box>
-            <Typography>{blog?.author}</Typography>
+            <Typography>{detail?.author}</Typography>
             <Typography>{formattedDate}</Typography>
           </Box>
         </CardContent>
 
         <CardContent>
-          <Typography variant="h5">{blog?.title} </Typography>
-          <Typography variant="body2">{blog?.content}</Typography>
+          <Typography variant="h5">{detail?.title} </Typography>
+          <Typography variant="body2">{detail?.content}</Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+          <IconButton
+            color={isClicked ? "error" : "default"}
+            onClick={handleClickLike}
+            aria-label="add to favorites"
+          >
             <FavoriteIcon />
-            <Typography variant="h5">{blog?.likes}</Typography>
+            <Typography variant="h5">{detail?.likes}</Typography>
           </IconButton>
           <IconButton
             onClick={() => setCommentField(!commentField)}
             aria-label="share"
           >
             <CommentIcon />
-            <Typography variant="h5">{blog?.comment_count}</Typography>
+            <Typography variant="h5">{detail?.comment_count}</Typography>
           </IconButton>
           <IconButton aria-label="share">
             <VisibilityIcon />
-            <Typography variant="h5">{blog?.post_views}</Typography>
+            <Typography variant="h5">{detail?.post_views}</Typography>
           </IconButton>
         </CardActions>
         <Box sx={{ textAlign: "center" }}>
-          {currentUser === blog.author ? (
+          {currentUser === detail.author ? (
             <>
               {" "}
               <Button
@@ -132,39 +178,49 @@ const Detail = () => {
                 variant="contained"
                 color="success"
                 size="small"
-                onClick={() => handleOpen(getBlogDetailData(blog.id))}
+                onClick={() => {
+                  setFormValues(detail);
+                  handleOpen();
+                }}
               >
                 Update Blog
               </Button>
               <DeleteModal
                 open={open}
                 handleClose={handleClose}
-                blogId={blog.id}
-                formValues = {formValues}
-                setFormValues = {setFormValues}
-
+                blogId={detail.id}
+                formValues={formValues}
+                setFormValues={setFormValues}
               />
             </>
           ) : (
             ""
           )}{" "}
-          {currentUser === blog.author ? (
-            <Button
-              sx={{ marginLeft: "auto" }}
-              variant="contained"
-              color="error"
-              size="small"
-            >
-              Delete Blog
-            </Button>
+          {currentUser === detail.author ? (
+            <>
+              <Button
+                sx={{ marginLeft: "auto" }}
+                variant="contained"
+                color="error"
+                size="small"
+                onClick={() => handleOpen1()}
+              >
+                Delete Blog
+              </Button>
+              <UpdateModal
+                open={open1}
+                handleClose={handleClose1}
+                blogId={detail.id}
+              />
+            </>
           ) : (
             ""
           )}
         </Box>
         {commentField ? (
           <>
-            <CommentForum blog={blog} />
-            <CommentCard idNo={blog.id} />{" "}
+            <CommentForum blog={detail} />
+            <CommentCard idNo={detail.id} />{" "}
           </>
         ) : (
           ""

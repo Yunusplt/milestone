@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux';
 
 const Profile = () => {
 
-  const { currentUser, bio, email, image } = useSelector((state) => state.auth);
-
+  const { currentUser, bio, email, image,id } = useSelector((state) => state.auth);
+console.log(currentUser);
+console.log(id);
   return (
     <Grid
       sx={{
@@ -18,6 +19,7 @@ const Profile = () => {
         justifyContent: "center",
         alignItems: "center",
         mt: 2,
+        mb:6
       }}
     >
       <Box

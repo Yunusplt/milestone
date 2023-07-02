@@ -6,6 +6,8 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
+import { useNavigate } from "react-router-dom";
+import { toastSuccessNotify } from "../helper/ToastNotify";
 
 
 const SignupSchema = Yup.object().shape({
@@ -41,8 +43,7 @@ const {postNewBlog}=useBlogCalls()
     //   e.preventDefault()
     //   console.log(values);
     // }
-
-
+const navigate = useNavigate()
 
   return (
     <Container maxWidth="lg">
@@ -72,6 +73,8 @@ const {postNewBlog}=useBlogCalls()
               console.log(values);
               postNewBlog(values);
               actions.resetForm(); // inputları boşaltmak için kullanıyroruz
+              toastSuccessNotify("New blog created")
+             navigate("/")
             }}
           >
             {({
