@@ -11,8 +11,6 @@ import {
   postLikeSuccess,
 } from "../features/blogSlice";
 
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const useBlogCalls = () => {
   const dispatch = useDispatch();
   
@@ -74,7 +72,7 @@ const useBlogCalls = () => {
   const postNewComment = async (comm, idNo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.post(
+      await axios.post(
         `http://35113.fullstack.clarusway.com/api/comments/${idNo}/`,
         comm,
         {

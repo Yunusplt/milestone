@@ -8,6 +8,7 @@ const useAuthCalls = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
     
   const register = async (userInfo) => {
     dispatch(fetchStart());

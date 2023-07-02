@@ -32,9 +32,6 @@ const RegisterForm = ({
   handleSubmit,
   handleChange,
 }) => {
-  console.log(values);
-  console.log(errors);
-  console.log(touched);
 
   return (
     <div>

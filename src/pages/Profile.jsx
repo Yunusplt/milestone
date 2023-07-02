@@ -1,17 +1,15 @@
-import React from 'react'
+import React from "react";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
-import { useSelector } from 'react-redux';
-
-
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const { currentUser, bio, email, image } = useSelector(
+    (state) => state.auth
+  );
 
-  const { currentUser, bio, email, image,id } = useSelector((state) => state.auth);
-console.log(currentUser);
-console.log(id);
   return (
     <Grid
       sx={{
@@ -19,7 +17,7 @@ console.log(id);
         justifyContent: "center",
         alignItems: "center",
         mt: 2,
-        mb:6
+        mb: 6,
       }}
     >
       <Box
@@ -44,6 +42,6 @@ console.log(id);
       </Box>
     </Grid>
   );
-}
+};
 
-export default Profile
+export default Profile;

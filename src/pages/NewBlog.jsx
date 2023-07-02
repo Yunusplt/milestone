@@ -21,7 +21,7 @@ const SignupSchema = Yup.object().shape({
 
 const NewBlog = () => {
 const { categories } = useSelector((state) => state.blog);
-console.log(categories);
+
 
 const {postNewBlog}=useBlogCalls()
     // const [category, setCategory] = useState("");

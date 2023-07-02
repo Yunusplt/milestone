@@ -18,12 +18,10 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useState } from "react";
 
 const CardMyBlogs = ({ blog }) => {
-  console.log(blog);
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.auth);
   const { postLike, getBlogs } = useBlogCalls();
 
-  console.log(currentUser);
   //todo domain e id ekleme???
   const handleOnClick = (blog) => {
     if (currentUser) {
@@ -53,80 +51,79 @@ const CardMyBlogs = ({ blog }) => {
       second: "2-digit",
     }
   );
-  console.log(blog.status);
 
   return (
     <>
-        <Card
-          sx={{
-            width: 350,
-            cursor: "pointer",
-            height: 540,
-            boxShadow: 11,
-            borderRadius: 2,
-          }}
-        >
-          <CardMedia
-            component="img"
-            height="200"
-            image={blog?.image}
-            alt={blog?.title}
-            sx={{ objectFit: "contain", py: 2 }}
-          />
-          <CardHeader title={blog?.title} subheader={formattedDate} />
+      <Card
+        sx={{
+          width: 350,
+          cursor: "pointer",
+          height: 540,
+          boxShadow: 11,
+          borderRadius: 2,
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="200"
+          image={blog?.image}
+          alt={blog?.title}
+          sx={{ objectFit: "contain", py: 2 }}
+        />
+        <CardHeader title={blog?.title} subheader={formattedDate} />
 
-          <CardContent>
-            <Typography
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: "2",
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {blog?.content}
-            </Typography>
-          </CardContent>
-          <CardContent
+        <CardContent>
+          <Typography
             sx={{
-              display: "flex",
-              justifyContent: "left",
-              alignItems: "center",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: "2",
+              WebkitBoxOrient: "vertical",
             }}
           >
-            <IconButton aria-label="share">
-              <AccountCircleIcon />
-            </IconButton>
-            <Typography>{blog?.author}</Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <IconButton
-              color={isClicked ? "error" : "default"}
-              onClick={handleClickLike}
-              aria-label="add to favorites"
-            >
-              <FavoriteIcon />
-              <Typography variant="h5">{blog?.likes}</Typography>
-            </IconButton>
-            <IconButton aria-label="share">
-              <CommentIcon />
-              <Typography variant="h5">{blog?.comment_count}</Typography>
-            </IconButton>
-            <IconButton aria-label="share">
-              <VisibilityIcon />
-              <Typography variant="h5">{blog?.post_views}</Typography>
-            </IconButton>
-            <Button
-              onClick={() => handleOnClick(blog)}
-              sx={{ marginLeft: "auto" }}
-              variant="contained"
-              color="info"
-            >
-              Read More
-            </Button>
-          </CardActions>
-        </Card>
+            {blog?.content}
+          </Typography>
+        </CardContent>
+        <CardContent
+          sx={{
+            display: "flex",
+            justifyContent: "left",
+            alignItems: "center",
+          }}
+        >
+          <IconButton aria-label="share">
+            <AccountCircleIcon />
+          </IconButton>
+          <Typography>{blog?.author}</Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton
+            color={isClicked ? "error" : "default"}
+            onClick={handleClickLike}
+            aria-label="add to favorites"
+          >
+            <FavoriteIcon />
+            <Typography variant="h5">{blog?.likes}</Typography>
+          </IconButton>
+          <IconButton aria-label="share">
+            <CommentIcon />
+            <Typography variant="h5">{blog?.comment_count}</Typography>
+          </IconButton>
+          <IconButton aria-label="share">
+            <VisibilityIcon />
+            <Typography variant="h5">{blog?.post_views}</Typography>
+          </IconButton>
+          <Button
+            onClick={() => handleOnClick(blog)}
+            sx={{ marginLeft: "auto" }}
+            variant="contained"
+            color="info"
+          >
+            Read More
+          </Button>
+        </CardActions>
+      </Card>
     </>
   );
 };

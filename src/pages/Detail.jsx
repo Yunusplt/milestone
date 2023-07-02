@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -14,37 +14,20 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useSelector } from "react-redux";
 import CommentForum from "../components/blog/CommentForum";
 import CommentCard from "../components/blog/CommentCard";
-import Modal from "@mui/material/Modal";
 import DeleteModal from "../components/blog/DeleteModal";
 import UpdateModal from "../components/blog/UpdateModal";
-
-
- const style = {
-   position: "absolute",
-   top: "50%",
-   left: "50%",
-   transform: "translate(-50%, -50%)",
-   width: 400,
-   bgcolor: "background.paper",
-   border: "2px solid #000",
-   boxShadow: 24,
-   p: 4,
- };
 
 const Detail = () => {
   const [commentField, setCommentField] = useState(false);
 
-  const { getBlogDetailData , postLike, getBlogs} = useBlogCalls();
-  
+  const { getBlogDetailData, postLike } = useBlogCalls();
 
   const { currentUser } = useSelector((state) => state.auth);
 
-
   const location = useLocation();
   const blog = location.state.blog;
- const { detail } = useSelector((state) => state.blog);
+  const { detail } = useSelector((state) => state.blog);
 
- 
   const formattedDate = new Date(`${detail?.publish_date}`).toLocaleString(
     "tr-TR",
     {
@@ -57,34 +40,11 @@ const Detail = () => {
     }
   );
 
- 
-
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-   const handleClose = () => {
-     setOpen(false);
-     setFormValues({
-       title: "",
-       image: "",
-       category_name: "",
-       address: "",
-       status:"",
-       content:""
-     });
-     //* handleClose olduğunda yani modal kapnadığında formdaki verilerin temizlenmesi için burada tanımladık.
-   };
-
-  const [open1, setOpen1] = React.useState(false);
-  const handleOpen1 = () => setOpen1(true);
-   const handleClose1 = () => setOpen1(false);
-
-   
-
-   const warning = "Do you really want to delete your blog? This process cannot be undone!"
-
-    
-    const [formValues, setFormValues] = useState({
+  const handleClose = () => {
+    setOpen(false);
+    setFormValues({
       title: "",
       image: "",
       category_name: "",
@@ -92,11 +52,25 @@ const Detail = () => {
       status: "",
       content: "",
     });
+    //* handleClose olduğunda yani modal kapnadığında formdaki verilerin temizlenmesi için burada tanımladık.
+  };
+
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const [formValues, setFormValues] = useState({
+    title: "",
+    image: "",
+    category_name: "",
+    address: "",
+    status: "",
+    content: "",
+  });
 
   useEffect(() => {
-  getBlogDetailData(blog.id)
-
-    }, [])
+    getBlogDetailData(blog.id);
+  }, []); // eslint-disable-line
 
   const [isClicked, setClicked] = useState(false);
 
@@ -105,7 +79,6 @@ const Detail = () => {
     getBlogDetailData(detail.id);
     setClicked(!isClicked);
   };
-    
 
   return (
     <Grid
@@ -115,7 +88,7 @@ const Detail = () => {
         justifyContent: "center",
         alignItems: "center",
         mt: 2,
-        mb:8
+        mb: 8,
       }}
     >
       <Box
@@ -186,6 +159,7 @@ const Detail = () => {
                 Update Blog
               </Button>
               <DeleteModal
+                key={detail.id}
                 open={open}
                 handleClose={handleClose}
                 blogId={detail.id}
@@ -208,6 +182,7 @@ const Detail = () => {
                 Delete Blog
               </Button>
               <UpdateModal
+                key={detail.id}
                 open={open1}
                 handleClose={handleClose1}
                 blogId={detail.id}

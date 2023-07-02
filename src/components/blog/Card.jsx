@@ -20,12 +20,10 @@ import {useState} from "react";
 
 
 const CardBlogs = ({ blog }) => {
-console.log(blog);
   const navigate = useNavigate()
   const {currentUser} = useSelector((state)=>state.auth)
   const {postLike, getBlogs} = useBlogCalls()
 
-  console.log(currentUser);
 //todo domain e id ekleme???
   const handleOnClick=(blog)=>{
      if (currentUser) {

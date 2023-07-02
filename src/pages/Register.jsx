@@ -10,11 +10,8 @@ import { Formik } from "formik";
 import RegisterForm, { RegisterSchema } from "../components/auth/RegisterForm";
 import useAuthCalls from "../hooks/useAuthCalls";
 
-
 const Register = () => {
-  const  {register} = useAuthCalls();
-
-
+  const { register } = useAuthCalls();
 
   return (
     <Container sx={{ mt: 8 }} maxWidth="lg">
@@ -62,12 +59,11 @@ const Register = () => {
             onSubmit={(values, actions) => {
               // same shape as initial values
               console.log(values);
-              register(values)     //todo formdan gelen values
+              register(values); //todo formdan gelen values
               actions.resetForm();
             }}
             component={(props) => <RegisterForm {...props} />}
-          >
-          </Formik>
+          ></Formik>
 
           <Box sx={{ textAlign: "left", mt: 2 }}>
             Already have an account? <Link to="/login">Sign in</Link>

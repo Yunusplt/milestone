@@ -17,17 +17,7 @@ export const LoginSchema = Yup.object().shape({
     ),
 });
 
-const LoginForm = ({
-  values,
-  errors,
-  touched,
-  handleBlur,
-  handleChange,
-}) => {
-  console.log(values);
-  console.log(errors);
-  console.log(touched);
-
+const LoginForm = ({ values, errors, touched, handleBlur, handleChange }) => {
   return (
     <div>
       <Form>
