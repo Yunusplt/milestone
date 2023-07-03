@@ -27,7 +27,7 @@ const Detail = () => {
   const location = useLocation();
   const blog = location.state.blog;
   const { detail } = useSelector((state) => state.blog);
-
+console.log(detail);
   const formattedDate = new Date(`${detail?.publish_date}`).toLocaleString(
     "tr-TR",
     {
@@ -52,7 +52,6 @@ const Detail = () => {
       status: "",
       content: "",
     });
-    //* handleClose olduğunda yani modal kapnadığında formdaki verilerin temizlenmesi için burada tanımladık.
   };
 
   const [open1, setOpen1] = React.useState(false);

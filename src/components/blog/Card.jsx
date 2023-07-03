@@ -7,7 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -15,40 +15,29 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toastWarnNotify } from "../../helper/ToastNotify";
 import useBlogCalls from "../../hooks/useBlogCalls";
-import {useState} from "react";
-
-
+import { useState } from "react";
 
 const CardBlogs = ({ blog }) => {
-  const navigate = useNavigate()
-  const {currentUser} = useSelector((state)=>state.auth)
-  const {postLike, getBlogs} = useBlogCalls()
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.auth);
+  const { postLike, getBlogs } = useBlogCalls();
 
-//todo domain e id ekleme???
-  const handleOnClick=(blog)=>{
-     if (currentUser) {
-      navigate(`/blog/detail/`, { state: { blog} });
-      
-  
-      
-  }else{
-       navigate("/login");
-       toastWarnNotify("You must be logged in!")
-  }
-  }
+  const handleOnClick = (blog) => {
+    if (currentUser) {
+      navigate(`/blog/detail/`, { state: { blog } });
+    } else {
+      navigate("/login");
+      toastWarnNotify("You must be logged in!");
+    }
+  };
 
- 
- const [isClicked, setClicked] = useState(false)
+  const [isClicked, setClicked] = useState(false);
 
-  const handleClickLike = () =>{
+  const handleClickLike = () => {
     postLike(blog?.id);
     getBlogs();
-    setClicked(!isClicked)
-  }
-
-
-
- 
+    setClicked(!isClicked);
+  };
 
   const formattedDate = new Date(`${blog?.publish_date}`).toLocaleString(
     "tr-TR",
@@ -134,8 +123,3 @@ const CardBlogs = ({ blog }) => {
 
 export default CardBlogs;
 
-// export default function RecipeReviewCard() {
-
-// }
-
-// //todo   marginLeft: "auto",

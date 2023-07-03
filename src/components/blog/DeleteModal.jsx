@@ -1,5 +1,5 @@
-import { Modal } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Modal } from "@mui/material";
+import React from "react";
 import {
   Box,
   Button,
@@ -10,14 +10,18 @@ import {
   TextField,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useSelector } from 'react-redux';
-import useBlogCalls from '../../hooks/useBlogCalls';
+import { useSelector } from "react-redux";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
-
-const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
-
+const DeleteModal = ({
+  open,
+  handleClose,
+  blogId,
+  formValues,
+  setFormValues,
+}) => {
   const { categories } = useSelector((state) => state.blog);
-  const { putUpdateData, getBlogDetailData } = useBlogCalls();
+  const { putUpdateData } = useBlogCalls();
 
   const handleChange = (e) => {
     setFormValues({
@@ -26,19 +30,18 @@ const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
     });
   };
 
-   const handleSubmit = (e) => {
-     e.preventDefault();
-      putUpdateData(formValues,blogId)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    putUpdateData(formValues, blogId);
 
-     handleClose(); //? submit işleminden sonra modalın kapanması için burada handleClose fonksiyonunu çağırıyoruz.
-   };
-
+    handleClose(); 
+  };
 
   return (
     <Modal
       open={open}
-      onClose={()=>{
-        handleClose()
+      onClose={() => {
+        handleClose();
         setFormValues({
           title: "",
           image: "",
@@ -47,8 +50,7 @@ const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
           status: "",
           content: "",
         });
-      }
-      }
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -97,7 +99,7 @@ const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
               value={formValues.category}
               onChange={handleChange}
               label="Category"
-              name='category'
+              name="category"
             >
               {categories.map((category) => (
                 <MenuItem value={category.id}>{category.name}</MenuItem>
@@ -114,7 +116,7 @@ const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
               value={formValues.status}
               onChange={handleChange}
               label="Status"
-              name='status'
+              name="status"
               required
             >
               <MenuItem
@@ -150,6 +152,6 @@ const DeleteModal = ({open,handleClose, blogId, formValues, setFormValues}) => {
       </Box>
     </Modal>
   );
-}
+};
 
-export default DeleteModal
+export default DeleteModal;

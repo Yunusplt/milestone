@@ -1,14 +1,21 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toastSuccessNotify } from "../helper/ToastNotify";
-
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
@@ -20,30 +27,12 @@ const SignupSchema = Yup.object().shape({
 });
 
 const NewBlog = () => {
-const { categories } = useSelector((state) => state.blog);
+  const { categories } = useSelector((state) => state.blog);
+  const { postNewBlog } = useBlogCalls();
+  const navigate = useNavigate();
 
-
-const {postNewBlog}=useBlogCalls()
-    // const [category, setCategory] = useState("");
-    // const [status, setStatus] = useState("");
-
-    // const handleChangeCat = (event) => {
-    //   setCategory(event.target.value);
-    
-    // };
-    // const handleChangeStat = (event) => {
-    //   setStatus(event.target.value)
-    // };+
-
-    // const handleChange =(e)=>{
-    //     console.log(e);
-    // }
-
-    // const handleSubmit =e=>{
-    //   e.preventDefault()
-    //   console.log(values);
-    // }
-const navigate = useNavigate()
+  const currentLocation = useLocation()
+  console.log(currentLocation);
 
   return (
     <Container maxWidth="lg">
@@ -73,8 +62,8 @@ const navigate = useNavigate()
               console.log(values);
               postNewBlog(values);
               actions.resetForm(); // inputları boşaltmak için kullanıyroruz
-              toastSuccessNotify("New blog created")
-             navigate("/")
+              toastSuccessNotify("New blog created");
+              navigate("/");
             }}
           >
             {({

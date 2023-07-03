@@ -4,26 +4,22 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import useBlogCalls from "../../hooks/useBlogCalls";
 
+const CommentCard = ({ idNo }) => {
+  const { postNewComment } = useBlogCalls();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-const CommentCard = ({idNo}) => {
-
-  const { postNewComment, getBlogDetailData } = useBlogCalls();
-
-
-  const handleSubmit =(e)=>{
-    e.preventDefault()
-
-    const comment = e.target[0].value
+    const comment = e.target[0].value;
 
     const newComment = {
-      "content" : `${comment}`,
-      "post" :`${idNo}`
-    }
-console.log(newComment);
-    postNewComment(newComment,idNo)
-  
-  }
+      content: `${comment}`,
+      post: `${idNo}`,
+    };
+    console.log(newComment);
+    postNewComment(newComment, idNo);
+    e.target[0].value = ""
+    };
 
   return (
     <Box
@@ -38,15 +34,11 @@ console.log(newComment);
       noValidate
       autoComplete="off"
     >
-      <TextField
-        id="outlined-number"
-        label="Add a new comment"
-      />
+      <TextField id="outlined-number" label="Add a new comment" />
       <Button
         sx={{ width: "95%", marginLeft: "8px" }}
         type="submit"
         variant="contained"
-
       >
         Add Comment
       </Button>

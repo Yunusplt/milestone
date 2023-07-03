@@ -11,79 +11,77 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useAuthCalls from "../hooks/useAuthCalls";
 import { toastWarnNotify } from "../helper/ToastNotify";
 
-
-// const pages = ["Dashboard", "New Blog", "About"];
-// const settings = ["My Blogs", "Profile", "Logout"];
-// const regLog=["Login", "Register"]
-
 const pages = [
   {
-    title:"Dashboard",
-    url: "/"
+    title: "Dashboard",
+    url: "/",
   },
   {
-    title:"New Blog",
-    url: "blog/new-blog"
+    title: "New Blog",
+    url: "blog/new-blog",
   },
   {
-    title:"About",
-    url: "/about"
+    title: "About",
+    url: "/about",
   },
-]
+];
 
 const settings = [
   {
-    title:"My Blogs",
-    url: "/my-blogs"
-},
+    title: "My Blogs",
+    url: "/my-blogs",
+  },
   {
-    title:"Profile",
-    url: "/profile"
-},
+    title: "Profile",
+    url: "/profile",
+  },
   {
-    title:"Logout",
-    url: "/"
-},
-]
+    title: "Logout",
+    url: "/",
+  },
+];
 
 const regLogs = [
   {
     title: "Login",
-    url: "/login"
+    url: "/login",
   },
   {
     title: "Register",
-    url: "/register"
-  }
-]
+    url: "/register",
+  },
+];
 
 function Navbar() {
-  const {currentUser} = useSelector((state)=>state.auth)
-  const {logout} = useAuthCalls()
-  const navigate = useNavigate()
+  const { currentUser } = useSelector((state) => state.auth);
+  const { logout } = useAuthCalls();
+  const navigate = useNavigate();
+  const {image} = useSelector((state)=>state.auth)
+  const avatar =
+    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png";
 
-  const handleClick =(a)=>{
-    if (a.title==="Logout") {
-      logout()
-    }else{
-      navigate(a.url)
+  const handleClick = (a) => {
+    if (a.title === "Logout") {
+      logout();
+    } else {
+      navigate(a.url);
     }
-  }
+  };
 
-  const handleClickPages =(page)=>{
-      if (page.title==="New Blog" && !currentUser ) {
-        navigate(page.url)
-        toastWarnNotify("You must be logged in!")
-      }else{
-        handleCloseNavMenu()
-        navigate(page.url)
-      }
-  }
+  const handleClickPages = (page) => {
+    if (page.title === "New Blog" && !currentUser) {
+      navigate(page.url);
+      toastWarnNotify("You must be logged in!");
+    } else {
+      handleCloseNavMenu();
+      navigate(page.url);
+    }
+  };
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -107,30 +105,12 @@ function Navbar() {
     <AppBar sx={{ backgroundColor: "salmon" }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography> */}
-          <Box sx={{ display: { xs: "none", md: "flex", cursor:"pointer" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex", cursor: "pointer" } }}>
             <img
               src="https://cdn.pixabay.com/photo/2015/01/21/13/20/blog-606684_1280.png"
               width="100px"
               alt="Logo"
-              onClick={()=>navigate("/")}
+              onClick={() => navigate("/")}
             />
           </Box>
 
@@ -165,46 +145,35 @@ function Navbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Typography  onClick={()=>handleClickPages(page)} textAlign="center">{page.title}</Typography>
+                  <Typography
+                    onClick={() => handleClickPages(page)}
+                    textAlign="center"
+                  >
+                    {page.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box
-            sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1, cursor:"pointer" }}
+            sx={{
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              cursor: "pointer",
+            }}
           >
             <img
               src="https://cdn.pixabay.com/photo/2015/01/21/13/20/blog-606684_1280.png"
               width="100px"
               alt="Logo"
-              onClick={()=>navigate("/")}
+              onClick={() => navigate("/")}
             />
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page.title}
-                // onClick={()=>handleCloseNavMenu(navigate(page.url))}
-                onClick={()=>handleClickPages(page)}
+                onClick={() => handleClickPages(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.title}
@@ -215,7 +184,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={currentUser? image : avatar} /> 
               </IconButton>
             </Tooltip>
             <Menu
@@ -238,7 +207,7 @@ function Navbar() {
                 ? settings.map((setting) => (
                     <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
                       <Typography
-                        onClick={() =>handleClick(setting) }
+                        onClick={() => handleClick(setting)}
                         textAlign="center"
                       >
                         {setting.title}

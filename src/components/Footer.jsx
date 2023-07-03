@@ -1,7 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import { Box } from "@mui/material";
 
 export default function Footer() {
@@ -23,7 +22,7 @@ export default function Footer() {
       <Container maxWidth="sm">
         <Typography variant="body2" color="text.secondary" align="center">
           {"Copyright © "}
-         <Typography variant="span">Designed by Yunus </Typography>
+          <Typography variant="span">Designed by Yunus </Typography>
           {new Date().getFullYear()}
           {"."}
         </Typography>

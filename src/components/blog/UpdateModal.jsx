@@ -1,37 +1,21 @@
 import { Modal } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import React from "react";
+import { Box, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useNavigate } from "react-router-dom";
 import { toastSuccessNotify } from "../../helper/ToastNotify";
 
-const DeleteModal = ({
-  open,
-  handleClose,
-  blogId,
-}) => {
+const DeleteModal = ({ open, handleClose, blogId }) => {
+  const { deleteBlog } = useBlogCalls();
+  const navigate = useNavigate();
 
-  const {deleteBlog} =useBlogCalls()
-  const navigate = useNavigate()
-
-
-  const handleClickDel =()=>{
-    deleteBlog(blogId)
-    handleClose()
-    toastSuccessNotify("Blog was deleted")
-    navigate("/")
-
-  }
+  const handleClickDel = () => {
+    deleteBlog(blogId);
+    handleClose();
+    toastSuccessNotify("Blog was deleted");
+    navigate("/");
+  };
 
   return (
     <Modal
@@ -89,13 +73,12 @@ const DeleteModal = ({
 
 export default DeleteModal;
 
-
-        // sx={{
-        //   display: "flex",
-        //   flexDirection: "column",
-        //   gap: 2,
-        //   p: 2,
-        //   boxShadow: 20,
-        //   backgroundColor: "white",
-        //   width: 350,
-        // }}
+// sx={{
+//   display: "flex",
+//   flexDirection: "column",
+//   gap: 2,
+//   p: 2,
+//   boxShadow: 20,
+//   backgroundColor: "white",
+//   width: 350,
+// }}

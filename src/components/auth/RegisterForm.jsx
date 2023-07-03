@@ -32,7 +32,6 @@ const RegisterForm = ({
   handleSubmit,
   handleChange,
 }) => {
-
   return (
     <div>
       <Form onSubmit={handleSubmit}>

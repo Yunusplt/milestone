@@ -9,7 +9,6 @@ import Login from '../pages/Login'
 import Profile from '../pages/Profile'
 import Detail from '../pages/Detail'
 import MyBlogs from '../pages/MyBlogs'
-import Favorites from '../pages/Favorites'
 
 const AppRouter = () => {
   return (
@@ -20,7 +19,6 @@ const AppRouter = () => {
       <Route path="login" element={<Login />} />
       <Route path="profile" element={<Profile />} />
       <Route path="my-blogs" element={<MyBlogs />} />
-      <Route path="favorites" element={<Favorites />} />
       <Route path="blog" element={<PrivateRouter />}>
         <Route path="new-blog" element={<NewBlog />} />
         <Route path="detail" element={<Detail />} />

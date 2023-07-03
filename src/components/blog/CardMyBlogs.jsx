@@ -22,7 +22,6 @@ const CardMyBlogs = ({ blog }) => {
   const { currentUser } = useSelector((state) => state.auth);
   const { postLike, getBlogs } = useBlogCalls();
 
-  //todo domain e id ekleme???
   const handleOnClick = (blog) => {
     if (currentUser) {
       navigate(`/blog/detail/`, { state: { blog } });

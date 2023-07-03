@@ -12,7 +12,6 @@ const blogSlice = createSlice({
     comments: [],
     userDetail : [],
     like: ""
-    //! statelerimizin isimleri ile endpointlerimizin isimlerini aynı verdik. Bunun sebebi tek bir reducerla tüm stateleri dinamik bir şekilde doldurabilelim.
   },
 
   reducers: {
@@ -29,10 +28,8 @@ const blogSlice = createSlice({
       state.categories = payload;
     },
     getNewBlogSuccess: (state, { payload }) => {
-      console.log(payload);
       state.loading = false;
       state.blogs = [...state.blogs, { ...payload }];
-      console.log(state.blogs);
     },
     getCommentSuccess: (state, { payload }) => {
       state.loading = false;

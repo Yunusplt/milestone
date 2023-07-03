@@ -6,13 +6,12 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import { Formik } from "formik";
-// import useAuthCall from "../hooks/useAuthCall";
 import useAuthCalls from "../hooks/useAuthCalls";
 import LoginForm, { LoginSchema } from "../components/auth/LoginForm";
 
-
 const Login = () => {
-  const {login} = useAuthCalls();
+  const { login } = useAuthCalls();
+
 
   return (
     <Container sx={{ mt: 8 }} maxWidth="lg">

@@ -28,7 +28,6 @@ const authSlice = createSlice({
       state.token = payload?.token;
       state.error = false;
       state.id = payload?.id;
-      console.log(state.bio);
     },
     loginSuccess: (state, { payload }) => {
       console.log(payload);
@@ -36,6 +35,10 @@ const authSlice = createSlice({
       state.currentUser = payload?.user?.username;
       state.token = payload?.key;
       state.id = payload?.user.id
+      state.email=payload?.user.email
+      state.bio = payload?.user.bio;
+      state.image = payload?.user.image;
+      console.log(state.token);
     },
     logoutSuccess: (state) => {
       state.loading = false;

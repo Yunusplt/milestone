@@ -13,11 +13,9 @@ import {
 
 const useBlogCalls = () => {
   const dispatch = useDispatch();
- 
 
   const { token } = useSelector((state) => state.auth);
- const BASE_URL = process.env.REACT_APP_BASE_URL;
-
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const getBlogs = async () => {
     try {
@@ -52,8 +50,7 @@ const useBlogCalls = () => {
   const getBlogDetailData = async (blog) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.get(`${BASE_URL}api/blogs/${blog}/`, 
-      {
+      const { data } = await axios.get(`${BASE_URL}api/blogs/${blog}/`, {
         headers: { Authorization: `Token ${token}` },
       });
       dispatch(getBlogDetSuccess(data));
@@ -68,6 +65,7 @@ const useBlogCalls = () => {
       await axios.post(`${BASE_URL}api/comments/${idNo}/`, comm, {
         headers: { Authorization: `Token ${token}` },
       });
+      getComments(idNo)
     } catch (error) {
       dispatch(fetchFail);
     }
@@ -101,6 +99,7 @@ const useBlogCalls = () => {
   };
 
   const postLike = async (idNo) => {
+    console.log(token);
     dispatch(fetchStart());
     try {
       const { data } = await axios.post(`${BASE_URL}api/likes/${idNo}/`, null, {
