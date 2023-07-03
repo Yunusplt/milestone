@@ -11,20 +11,24 @@ import { Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toastWarnNotify } from "../../helper/ToastNotify";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useState } from "react";
+import { getBlogDetSuccess } from "../../features/blogSlice";
 
 const CardBlogs = ({ blog }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.auth);
   const { postLike, getBlogs } = useBlogCalls();
 
-  const handleOnClick = (blog) => {
+  const handleOnClick = (idNo) => {
     if (currentUser) {
-      navigate(`/blog/detail/`, { state: { blog } });
+      dispatch(getBlogDetSuccess([]));
+      // navigate(`/blog/detail/`, { state: { blog } });
+      navigate(`/blog/detail/${idNo}`);
     } else {
       navigate("/login");
       toastWarnNotify("You must be logged in!");
@@ -109,7 +113,7 @@ const CardBlogs = ({ blog }) => {
           <Typography variant="h5">{blog?.post_views}</Typography>
         </IconButton>
         <Button
-          onClick={() => handleOnClick(blog)}
+          onClick={() => handleOnClick(blog?.id)}
           sx={{ marginLeft: "auto" }}
           variant="contained"
           color="info"

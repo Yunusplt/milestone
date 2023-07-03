@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -19,26 +19,18 @@ import UpdateModal from "../components/blog/UpdateModal";
 
 const Detail = () => {
   const [commentField, setCommentField] = useState(false);
-
   const { getBlogDetailData, postLike } = useBlogCalls();
+  const { id } = useParams();
+
+  useEffect(() => {
+    getBlogDetailData(id);
+  }, []); // eslint-disable-line
 
   const { currentUser } = useSelector((state) => state.auth);
 
-  const location = useLocation();
-  const blog = location.state.blog;
-  const { detail } = useSelector((state) => state.blog);
-console.log(detail);
-  const formattedDate = new Date(`${detail?.publish_date}`).toLocaleString(
-    "tr-TR",
-    {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }
-  );
+  // const location = useLocation();
+  // const blog = location.state.blog;
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -67,9 +59,19 @@ console.log(detail);
     content: "",
   });
 
-  useEffect(() => {
-    getBlogDetailData(blog.id);
-  }, []); // eslint-disable-line
+  const { detail } = useSelector((state) => state.blog);
+  console.log(detail);
+  const formattedDate = new Date(`${detail?.publish_date}`).toLocaleString(
+    "tr-TR",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }
+  );
 
   const [isClicked, setClicked] = useState(false);
 
