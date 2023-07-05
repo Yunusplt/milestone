@@ -21,7 +21,7 @@ const Detail = () => {
   const [commentField, setCommentField] = useState(false);
   const { getBlogDetailData, postLike } = useBlogCalls();
   const { id } = useParams();
-
+  console.log(useParams());
   useEffect(() => {
     getBlogDetailData(id);
   }, []); // eslint-disable-line

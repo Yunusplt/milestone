@@ -9,11 +9,13 @@ import Login from '../pages/Login'
 import Profile from '../pages/Profile'
 import Detail from '../pages/Detail'
 import MyBlogs from '../pages/MyBlogs'
+import NotFound from '../pages/NotFound'
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
+      <Route path="notfound" element={<NotFound />} />
       <Route path="about" element={<About />} />
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />

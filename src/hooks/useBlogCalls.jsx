@@ -10,9 +10,11 @@ import {
   getUserSuccess,
   postLikeSuccess,
 } from "../features/blogSlice";
+import { useNavigate } from "react-router-dom";
 
 const useBlogCalls = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const { token } = useSelector((state) => state.auth);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -23,6 +25,8 @@ const useBlogCalls = () => {
       const url = "blogs";
       dispatch(getSuccess({ data, url }));
     } catch (error) {}
+    dispatch(fetchFail());
+    navigate("/notfound")
   };
 
   const getCategoryData = async () => {
@@ -32,6 +36,7 @@ const useBlogCalls = () => {
       dispatch(getCategorySuccess(data));
     } catch (error) {
       dispatch(fetchFail());
+
     }
   };
 
