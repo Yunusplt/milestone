@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";

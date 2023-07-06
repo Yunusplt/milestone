@@ -62,8 +62,7 @@ function Navbar() {
   const { logout } = useAuthCalls();
   const navigate = useNavigate();
   const {image} = useSelector((state)=>state.auth)
-  const avatar =
-    "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png";
+  const avatar ="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png";
 
   const handleClick = (a) => {
     if (a.title === "Logout") {

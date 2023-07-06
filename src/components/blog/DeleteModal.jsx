@@ -29,7 +29,6 @@ const DeleteModal = ({
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     putUpdateData(formValues, blogId);

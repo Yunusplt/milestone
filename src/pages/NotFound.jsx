@@ -12,7 +12,7 @@ const NotFound = () => {
         marginBottom: 250,
       }}
     >
-      <img src={imgNot} />
+      <img src={imgNot} alt='NotFound'/>
     </div>
   );
 }
