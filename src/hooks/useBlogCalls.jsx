@@ -24,9 +24,11 @@ const useBlogCalls = () => {
       const { data } = await axios.get(`${BASE_URL}api/blogs/`);
       const url = "blogs";
       dispatch(getSuccess({ data, url }));
-    } catch (error) {}
-    dispatch(fetchFail());
-    navigate("/notfound")
+    } catch (error) {
+      dispatch(fetchFail());
+      navigate("/notfound");
+    }
+    
   };
 
   const getCategoryData = async () => {
