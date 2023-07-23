@@ -1,4 +1,4 @@
-## Ekran Görüntüleri
+## How it looks
 
 ![Uygulama Ekran Görüntüsü](./Blog.gif)
 
